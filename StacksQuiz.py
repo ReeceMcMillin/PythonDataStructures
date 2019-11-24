@@ -58,14 +58,22 @@ class LinkedList:
 
 
 class Stack:
+    elements = []  # Only here to keep track of things for easy printing
+
     def __init__(self, top=None):
         self.ll = LinkedList(top)
+        self.elements.append(top)
 
     def push(self, new_element):
+        self.elements.append(new_element)
         self.ll.insert_first(new_element)
 
     def pop(self):
+        self.elements.pop()
         self.ll.delete_first()
+
+    def __str__(self):
+        return f'{" ".join([str(element.value) for element in self.elements])}'
 
 
 class Element:
@@ -77,19 +85,11 @@ class Element:
         return 'Value: {}, Next: {}'.format(self.value, self.next)
 
 
-head_element = Element(5)
-second_element = Element(6)
-third_element = Element(7)
-ll = LinkedList(head=head_element)
-ll.append(second_element)
-ll.append(third_element)
-print(ll.get_position(0))
-my_el = Element(15000)
-ll.insert(my_el, 1)
-print(ll.get_position(0))
-ll.delete(15000)
-print(ll.get_position(0))
-ll.insert_first(Element(10000))
-print(ll.get_position(0))
-ll.delete_first()
-print(ll.get_position(0))
+my_stack = Stack(top=Element(4))
+print(my_stack)  # 4
+my_stack.push(Element(3))
+print(my_stack)  # 4 3
+my_stack.push(Element('Element with a different data type'))
+print(my_stack)  # 4 3 Element with a different data type
+my_stack.pop()
+print(my_stack)  # 4 3
